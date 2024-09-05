@@ -1,12 +1,25 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import logo from "./logo.png";
 
 const Manager = () => {
-  const ref = useRef()
+  const ref = useRef();
+  const [form, setForm] = useState({ URL: "", name: "", pwd: "" });
+
   const showPassword = () => {
-    ref.current.src.includes("icons/eye.png")
-      ? (ref.current.src = "icons/hidden.png")
-      : (ref.current.src = "icons/eye.png");
+    if (ref.current.src.includes("icons/eye.png")) {
+      ref.current.src = "icons/hidden.png";
+    } else {
+      ref.current.src = "icons/eye.png";
+    }
+  };
+
+  const onSave = () => {
+    console.log(form)
+  }
+  
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   return (
@@ -29,17 +42,26 @@ const Manager = () => {
             className="rounded-full border-2 border-[#cc4b85] relative w-[90%] p-3 py-0.5"
             type="text"
             placeholder="Enter Website URL"
+            value={form.URL}
+            onChange={handleChange}
+            name="URL"
           />
           <div className="flex gap-10 w-[90%] relative">
             <input
               className="rounded-full border-2 border-[#cc4b85] relative w-[90%] p-3 py-0.5"
               type="text"
               placeholder="Enter Username"
+              value={form.name}
+              onChange={handleChange}
+              name="name"
             />
             <input
               className="rounded-full border-2 border-[#cc4b85] relative w-[90%] p-3 py-0.5"
               type="text"
               placeholder="Enter Password"
+              value={form.pwd}
+              onChange={handleChange}
+              name="pwd"
             />
             <span
               className="absolute top-0 right-2 cursor-pointer"
@@ -55,7 +77,8 @@ const Manager = () => {
             </span>
           </div>
 
-          <button className="bg-[#cc4b85] rounded-lg w-40 flex items-center justify-center relative top-4 font-bold gap-2 hover:bg-[#e45595]">
+          <button className="bg-[#cc4b85] rounded-lg w-40 flex items-center justify-center relative top-4 font-bold gap-2 hover:bg-[#e45595]"
+          onClick={onSave}>
             <lord-icon
               src="https://cdn.lordicon.com/hqymfzvj.json"
               trigger="hover"
