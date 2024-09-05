@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import logo from "./logo.png";
 
 const Manager = () => {
   const ref = useRef();
   const [form, setForm] = useState({ URL: "", name: "", pwd: "" });
+  const [dataArray, setDataArray] = useState([])
 
   const showPassword = () => {
     if (ref.current.src.includes("icons/eye.png")) {
@@ -13,8 +14,15 @@ const Manager = () => {
     }
   };
 
+  // useEffect(() => {
+    
+    
+
+  // }, [])
+  
+
   const onSave = () => {
-    console.log(form)
+    localStorage.setItem("items",JSON.stringify(form))
   }
   
 
