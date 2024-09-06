@@ -4,7 +4,15 @@ import logo from "./logo.png";
 const Manager = () => {
   const ref = useRef();
   const [form, setForm] = useState({ URL: "", name: "", pwd: "" });
-  const [dataArray, setDataArray] = useState([])
+  const [dataArray, setDataArray] = useState([]);
+
+  useEffect(() => {
+    let mydata = localStorage.getItem("data");
+    console.log(JSON.parse(mydata));
+    if (mydata) {
+      setDataArray(JSON.parse(mydata));
+    }
+  }, []);
 
   const showPassword = () => {
     if (ref.current.src.includes("icons/eye.png")) {
@@ -14,24 +22,18 @@ const Manager = () => {
     }
   };
 
-  // useEffect(() => {
-    
-    
-
-  // }, [])
-  
-
-  const onSave = () => {
-    localStorage.setItem("items",JSON.stringify(form))
-  }
-  
+  const onSave = async () => {
+    setDataArray([...dataArray, form]);
+    localStorage.setItem("data", JSON.stringify([...dataArray, form]));
+    console.log([...dataArray, form]);
+  };
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center gap-24">
       <div className="absolute top-0 z-[-2] h-screen w-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px]"></div>
 
       <div className="flex flex-col relative top-10 items-center">
@@ -85,8 +87,10 @@ const Manager = () => {
             </span>
           </div>
 
-          <button className="bg-[#cc4b85] rounded-lg w-40 flex items-center justify-center relative top-4 font-bold gap-2 hover:bg-[#e45595]"
-          onClick={onSave}>
+          <button
+            className="bg-[#cc4b85] rounded-lg w-40 flex items-center justify-center relative top-4 font-bold gap-2 hover:bg-[#e45595]"
+            onClick={onSave}
+          >
             <lord-icon
               src="https://cdn.lordicon.com/hqymfzvj.json"
               trigger="hover"
@@ -94,6 +98,30 @@ const Manager = () => {
             Add Password
           </button>
         </div>
+      </div>
+
+      <div className="passwords w-[70vw]">
+      <h1 className="text-white font-bold text-lg">Saved Passwords:</h1>
+      {dataArray.length === 0 && <div className="text-white text-md">No data to show</div>}
+      {dataArray.length != 0 &&
+      <table className="table-auto text-white w-full rounded-md overflow-hidden">
+        <thead className="bg-gray-300 text-black">
+          <tr>
+            <th>Website URL</th>
+            <th>Username</th>
+            <th>Password</th>
+          </tr>
+        </thead>
+        <tbody>
+        {dataArray.map((items, index)=>{
+          return<tr key={index}>
+            <td className="text-center w-32"><a href={items.URL} target="_blank">{items.URL}</a></td>
+            <td className="text-center w-32">{items.name}</td>
+            <td className="text-center w-32">{items.pwd}</td>
+          </tr>
+        })}
+        </tbody>
+      </table>}
       </div>
     </div>
   );
