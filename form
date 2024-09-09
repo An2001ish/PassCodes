@@ -1,0 +1,62 @@
+
+import java.awt.*;
+import javax.swing.*;
+
+public class myJframe {
+
+    public static void main(String[] args) {
+
+        JFrame frame = new JFrame("MY FORM");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(500, 300);
+        frame.setLayout(new GridLayout(7, 2, 10, 10));
+
+        frame.add(new JLabel("First Name:"));
+        JTextField firstNameField = new JTextField();
+        frame.add(firstNameField);
+
+        frame.add(new JLabel("Last Name:"));
+        JTextField lastNameField = new JTextField();
+        frame.add(lastNameField);
+
+        frame.add(new JLabel("Gender:"));
+        JPanel genderPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JRadioButton maleRadio = new JRadioButton("Male");
+        JRadioButton femaleRadio = new JRadioButton("Female");
+        ButtonGroup genderGroup = new ButtonGroup();
+        genderGroup.add(maleRadio);
+        genderGroup.add(femaleRadio);
+        genderPanel.add(maleRadio);
+        genderPanel.add(femaleRadio);
+        frame.add(genderPanel);
+
+        frame.add(new JLabel("Birth date:"));
+        JPanel birthDatePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+        JComboBox<String> monthComboBox = new JComboBox<>(months);
+        JComboBox<String> dayComboBox = new JComboBox<>();
+        for (int i = 1; i <= 31; i++) {
+            dayComboBox.addItem(String.valueOf(i));
+        }
+        birthDatePanel.add(monthComboBox);
+        birthDatePanel.add(dayComboBox);
+        frame.add(birthDatePanel);
+
+        frame.add(new JLabel("Time Zone:"));
+        String[] timeZones = {"Select One", "PST", "MST", "CST", "EST"};
+        JComboBox<String> timeZoneComboBox = new JComboBox<>(timeZones);
+        frame.add(timeZoneComboBox);
+
+        frame.add(new JLabel("Occupation:"));
+        String[] occupations = {"Select One", "Student", "Engineer", "Teacher", "Doctor"};
+        JComboBox<String> occupationComboBox = new JComboBox<>(occupations);
+        frame.add(occupationComboBox);
+
+        frame.add(new JLabel());
+        JCheckBox smallBusinessCheckBox = new JCheckBox("I own or work with small business");
+        frame.add(smallBusinessCheckBox);
+
+        frame.setVisible(true);
+
+    }
+}
